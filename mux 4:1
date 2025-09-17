@@ -1,0 +1,66 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 09.12.2024 20:31:32
+// Design Name: 
+// Module Name: 4mux1
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module mux4to1(i, s, Y);
+input [3:0] i;
+input [1:0] s;
+output Y;
+wire w0, w1, w2, w3;
+
+and (w0, i[0], ~s[1], ~s[0]); 
+and (w1, i[1], ~s[1],  s[0]); 
+and (w2, i[2],  s[1], ~s[0]);
+and (w3, i[3],  s[1],  s[0]);
+or  (Y, w0, w1, w2, w3);
+
+endmodule
+
+
+
+
+
+module mux4to1_tb;
+reg [3:0]I;
+reg [1:0]S;
+wire Y;
+
+mux4to1 dut(I,S,Y);
+
+initial
+begin
+  I = 4'b1100; 
+  
+  S = 2'b00;   
+  #10;
+  
+  S = 2'b01;  
+  #10;
+  
+  S = 2'b10;
+  #10;
+  
+  S = 2'b11; 
+  #10;
+  
+  $stop; 
+end
+endmodule
